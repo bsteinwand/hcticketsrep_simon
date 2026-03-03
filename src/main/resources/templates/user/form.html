@@ -1,0 +1,22 @@
+<div th:fragment="userForm">
+	<form th:action="@{/user/{id}(id=${user.id})}" method="post" hx:post="@{/user/{id}(id=${user.id})}"  hx-target="#userRows" hx-swap="outerHTML">
+		<!--<form th:action="@{${user.id} != null ? '/users/' + ${user.id} : '/users'}" method="post" hx-post="@{${user.id} != null ? '/users/' + ${user.id} : '/users'}" hx-target="#userRows" hx-swap="outerHTML"> -->
+        <label>First Name: <input type="text" name="firstName" th:value="${user.firstName}" required/>
+            <span th:if="${#fields.hasErrors('user.firstName')}" th:errors="*{user.firstName}" style="color:red"></span>
+        </label><br/>
+		<label>Last Name: <input type="text" name="lastName" th:value="${user.lastName}" required/>
+		    <span th:if="${#fields.hasErrors('user.lastName')}" th:errors="*{user.lastName}" style="color:red"></span>
+		</label><br/>
+        <label>Email: <input type="email" name="email" th:value="${user.email}" required/>
+            <span th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}" style="color:red"></span>
+        </label><br/>
+        <label>Select Role:</label><br/>
+		<select name="roleId" id="roleId">
+			<option value="0">Select Role</option>
+			<option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.roleName}" th:selected="${role.id == user.roleId}"></option>
+		</select>
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+

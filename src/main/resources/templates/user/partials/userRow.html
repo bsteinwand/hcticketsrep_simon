@@ -1,0 +1,11 @@
+<tbody id="userRows" th:fragment="userRows">
+    <tr th:each="user : ${users}" th:id="${'user-' + user.id}">
+		<td th:text="${user.firstName}"></td>
+		<td th:text="${user.lastName}"></td>
+		<td th:text="${user.email}"></td>
+		<td th:text="${user.roleId}"></td>
+		<td>
+			<button hx:get="@{/user/{id}/edit(id=${user.id})}" hx-target="#userForm">Edit</button>
+		</td>
+    </tr>
+</tbody>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<head>
+    <title>User List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <button hx-get="/user/new" hx-target="#userForm" hx-swap="innerHTML">New User</button>
+
+    <table>
+        <thead>
+        <tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="userRows" th:fragment="userRows">
+            <tr th:each="user : ${users}" th:id="${'user-' + user.id}">
+                <td th:text="${user.firstName}"></td>
+				<td th:text="${user.lastName}"></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.roleId}"></td>
+				<td>
+					<button hx:get="@{/user/{id}/edit(id=${user.id})}" hx-target="#userForm">Edit</button>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="userForm"></div>
+</div>
+</body>
+</html>
