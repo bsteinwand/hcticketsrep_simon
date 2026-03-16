@@ -8,6 +8,7 @@ public record UserApplicationRoleResponseDto(
         Integer userId,
         Integer appId,
         String status,
+        OffsetDateTime activeDate,
         OffsetDateTime inactiveDate
 ) {}
 

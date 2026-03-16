@@ -9,6 +9,8 @@ import edu.helenacollege.hctickets.dto.UserApplicationRoleCreateDto;
 import edu.helenacollege.hctickets.dto.UserApplicationRoleResponseDto;
 import edu.helenacollege.hctickets.dto.UserApplicationRoleUpdateDto;
 import edu.helenacollege.hctickets.mapper.UserApplicationRoleMapper;
+import edu.helenacollege.hctickets.model.Application;
+import edu.helenacollege.hctickets.model.User;
 import edu.helenacollege.hctickets.model.UserApplicationRole;
 import edu.helenacollege.hctickets.repository.ApplicationRepository;
 import edu.helenacollege.hctickets.repository.ApplicationRoleRepository;
@@ -47,22 +49,32 @@ public class UserApplicationRoleServiceImpl implements UserApplicationRoleServic
 
         UserApplicationRole entity = new UserApplicationRole();
 
-        entity.setUser(
-                userRepository.findById(dto.userId())
-                        .orElseThrow(() -> new EntityNotFoundException("User not found"))
-        );
-
-        entity.setApplication(
-                applicationRepository.findById(dto.appId())
-                        .orElseThrow(() -> new EntityNotFoundException("Application not found"))
-        );
-
+        User user = userRepository.findById(dto.userId())
+        		.orElseThrow(() -> new EntityNotFoundException("User not found"));
+        
+        if (!"Active".equals(user.getStatus())) {
+        	throw new IllegalStateException("User is not active");
+        }
+        
+        entity.setUser(user);
+        
+        Application application = applicationRepository.findById(dto.appId())
+        		.orElseThrow(() -> new EntityNotFoundException("Application not found"));
+        
+        if (!"Active".equals(application.getStatus())) {
+        	throw new IllegalStateException("Application is not active");
+        }
+        
+        entity.setApplication(application);
+        
         entity.setApplicationRole(
-                applicationRoleRepository.findById(dto.appRoleId())
-                        .orElseThrow(() -> new EntityNotFoundException("ApplicationRole not found"))
+        		applicationRoleRepository.findById(dto.appRoleId())
+        			.orElseThrow(() -> new EntityNotFoundException("ApplicationRole not found"))
         );
 
         entity.setStatus(dto.status());
+        entity.setActiveDate(dto.activeDate());
+        entity.setInactiveDate(dto.inactiveDate());
 
         return mapper.toResponseDto(repository.save(entity));
     }

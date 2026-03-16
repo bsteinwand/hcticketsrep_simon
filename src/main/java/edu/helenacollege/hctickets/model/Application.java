@@ -37,5 +37,9 @@ public class Application {
 
     @Column(name = "Status", nullable = false, length = 20)
     private String status;
+    
+    public String getStatus() {
+    	return status;
+    }
 
 }

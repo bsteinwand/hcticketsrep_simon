@@ -46,24 +46,26 @@ public class UserApplicationRole {
 
     @Column(name = "Status", nullable = false, length = 20)
     private String status;
+    
+    @Column(name = "ActiveDate", nullable = false)
+    private OffsetDateTime activeDate;
 
     @Column(name = "InactiveDate")
     private OffsetDateTime inactiveDate;
-
-    
     
 	public UserApplicationRole() {
 		super();
 	}
 
 	public UserApplicationRole(Integer id, ApplicationRole applicationRole, User user, Application application,
-			String status, OffsetDateTime inactiveDate) {
+			String status, OffsetDateTime activeDate, OffsetDateTime inactiveDate) {
 		super();
 		this.id = id;
 		this.applicationRole = applicationRole;
 		this.user = user;
 		this.application = application;
 		this.status = status;
+		this.activeDate = activeDate;
 		this.inactiveDate = inactiveDate;
 	}
 
@@ -106,6 +108,14 @@ public class UserApplicationRole {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public OffsetDateTime getActiveDate() {
+		return activeDate;
+	}
+
+	public void setActiveDate(OffsetDateTime activeDate) {
+		this.activeDate = activeDate;
+	}
 
 	public OffsetDateTime getInactiveDate() {
 		return inactiveDate;
@@ -117,7 +127,7 @@ public class UserApplicationRole {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(application, applicationRole, id, inactiveDate, status, user);
+		return Objects.hash(application, applicationRole, id, activeDate, inactiveDate, status, user);
 	}
 
 	@Override
@@ -130,14 +140,14 @@ public class UserApplicationRole {
 			return false;
 		UserApplicationRole other = (UserApplicationRole) obj;
 		return Objects.equals(application, other.application) && Objects.equals(applicationRole, other.applicationRole)
-				&& Objects.equals(id, other.id) && Objects.equals(inactiveDate, other.inactiveDate)
+				&& Objects.equals(id, other.id) && Objects.equals(activeDate, other.activeDate) && Objects.equals(inactiveDate, other.inactiveDate)
 				&& Objects.equals(status, other.status) && Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
 		return "UserApplicationRole [id=" + id + ", applicationRole=" + applicationRole + ", user=" + user
-				+ ", application=" + application + ", status=" + status + ", inactiveDate=" + inactiveDate + "]";
+				+ ", application=" + application + ", status=" + status + ", activeDate=" + activeDate + ", inactiveDate=" + inactiveDate + "]";
 	}
     
 }
