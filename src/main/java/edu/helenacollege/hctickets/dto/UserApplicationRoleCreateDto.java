@@ -6,7 +6,7 @@ public record UserApplicationRoleCreateDto(
         Integer appRoleId,
         Integer userId,
         Integer appId,
-        OffsetDateTime activeDate,
-        OffsetDateTime inactiveDate,
+        String activeDate,
+        String inactiveDate,
         String status
 ) {}

@@ -1,6 +1,10 @@
 package edu.helenacollege.hctickets.service.impl;
 
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +56,7 @@ public class UserApplicationRoleServiceImpl implements UserApplicationRoleServic
         User user = userRepository.findById(dto.userId())
         		.orElseThrow(() -> new EntityNotFoundException("User not found"));
         
-        if (!"Active".equals(user.getStatus())) {
+        if (!"Active".equalsIgnoreCase(user.getStatus())) {
         	throw new IllegalStateException("User is not active");
         }
         
@@ -61,7 +65,7 @@ public class UserApplicationRoleServiceImpl implements UserApplicationRoleServic
         Application application = applicationRepository.findById(dto.appId())
         		.orElseThrow(() -> new EntityNotFoundException("Application not found"));
         
-        if (!"Active".equals(application.getStatus())) {
+        if (!"Active".equalsIgnoreCase(application.getStatus())) {
         	throw new IllegalStateException("Application is not active");
         }
         
@@ -71,20 +75,33 @@ public class UserApplicationRoleServiceImpl implements UserApplicationRoleServic
         		applicationRoleRepository.findById(dto.appRoleId())
         			.orElseThrow(() -> new EntityNotFoundException("ApplicationRole not found"))
         );
+        
+        if (!"Active".equalsIgnoreCase(dto.status())) {
+            throw new IllegalStateException("New user application role assignments must have Active status");
+        }
 
         entity.setStatus(dto.status());
-        entity.setActiveDate(dto.activeDate());
-        entity.setInactiveDate(dto.inactiveDate());
+        entity.setActiveDate(parseOffsetDateTime(dto.activeDate()));
+        entity.setInactiveDate(parseOffsetDateTime(dto.inactiveDate()));
 
         return mapper.toResponseDto(repository.save(entity));
     }
 
-    @Override
+    private OffsetDateTime parseOffsetDateTime(String value) {
+		if (value == null || value.isBlank()) {
+			return null;
+		}
+		return LocalDateTime.parse(value).atZone(ZoneId.systemDefault()).toOffsetDateTime();
+	}
+
+	@Override
     public UserApplicationRoleResponseDto update(Integer id, UserApplicationRoleUpdateDto dto) {
         UserApplicationRole entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("UserApplicationRole not found"));
-
-        mapper.updateEntity(dto, entity);
+        
+        entity.setStatus(dto.status());
+        entity.setActiveDate(parseOffsetDateTime(dto.activeDate()));
+        entity.setInactiveDate(parseOffsetDateTime(dto.inactiveDate()));
         return mapper.toResponseDto(repository.save(entity));
     }
 

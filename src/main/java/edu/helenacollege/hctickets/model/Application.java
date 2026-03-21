@@ -41,5 +41,20 @@ public class Application {
     public String getStatus() {
     	return status;
     }
+    
+    public Integer getId() {
+    	return id;
+    }
+    
+    public String getAppName() {
+    	return appName;
+    }
+    
+    public String getgetDescription() {
+    	return description;
+    }
+    public OffsetDateTime getCreationDate() {
+    	return creationDate;
+    }
 
 }

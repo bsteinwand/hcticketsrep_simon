@@ -40,5 +40,29 @@ public class Status {
 
     @Column(name = "Active", nullable = false)
     private Boolean active;
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getStatusType() {
+        return statusType;
+    }
+
+    public Integer getItemOrder() {
+        return itemOrder;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
 
 }

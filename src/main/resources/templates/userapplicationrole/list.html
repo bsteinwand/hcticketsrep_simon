@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>User Application Roles</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px;">
+        <h2 style="margin-top: 0;">Current User Roles</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Application</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody id="assignmentRows" th:fragment="rows">
+            <tr th:each="a : ${assignments}">
+                <td th:text="${a.userName}"></td>
+                <td th:text="${a.appName}"></td>
+                <td th:text="${a.appRoleName}"></td>
+                <td th:text="${a.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
+	    <span th:text="${errorMessage}"></span>
+	</div>
+
+    <button hx-get="/userApplicationRole/new"
+            hx-target="#formContainer"
+            hx-swap="innerHTML">
+        Assign New Role to User
+    </button>
+
+    <div id="formContainer" style="margin-top: 20px;"></div>
+
+</div>
+</body>
+</html>

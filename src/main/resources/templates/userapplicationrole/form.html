@@ -1,0 +1,50 @@
+<div th:fragment="form">
+    <form
+	    method="post"
+	    th:action="@{/userApplicationRole}"
+	>
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+        <label>User:</label>
+        <select name="userId">
+            <option th:each="u : ${users}"
+                    th:value="${u.id}"
+                    th:text="${u.firstName} + ' ' + ${u.lastName}">
+            </option>
+        </select><br/>
+
+        <label>Application:</label>
+        <select name="appId">
+            <option th:each="a : ${applications}"
+                    th:value="${a.id}"
+                    th:text="${a.appName}">
+            </option>
+        </select><br/>
+
+        <label>Application Role:</label>
+        <select name="appRoleId">
+            <option th:each="r : ${roles}"
+                    th:value="${r.id}"
+                    th:text="${r.roleName}">
+            </option>
+        </select><br/>
+
+        <label>Status:</label>
+        <select name="status">
+            <option th:each="s : ${statuses}"
+                    th:value="${s.code}"
+                    th:text="${s.code}">
+            </option>
+        </select><br/>
+
+        <label>Active Date:</label>
+        <input type="datetime-local" name="activeDate" required/><br/>
+
+        <label>Inactive Date:</label>
+        <input type="datetime-local" name="inactiveDate"/><br/>
+
+        <button type="submit">Assign Role</button>
+    </form>
+</div>

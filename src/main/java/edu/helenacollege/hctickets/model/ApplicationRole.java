@@ -28,5 +28,13 @@ public class ApplicationRole {
 
     @Column(name = "RoleName", nullable = false, length = 20)
     private String roleName;
+    
+    public Integer getId() {
+    	return id;
+    }
+    
+    public String getRoleName() {
+    	return roleName;
+    }
 
 }

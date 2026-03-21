@@ -4,6 +4,6 @@ import java.time.OffsetDateTime;
 
 public record UserApplicationRoleUpdateDto(
         String status,
-        OffsetDateTime activeDate,
-        OffsetDateTime inactiveDate
+        String activeDate,
+        String inactiveDate
 ) {}
