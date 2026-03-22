@@ -15,6 +15,10 @@ public interface UserApplicationRoleService {
     UserApplicationRoleResponseDto findById(Integer id);
 
     List<UserApplicationRoleResponseDto> findAll();
+    
+    List<UserApplicationRoleResponseDto> findActiveAssignmentsByUserId(Integer userId);
+    
+    UserApplicationRoleResponseDto unassign(Integer userApplicationRoleId);
 
     void delete(Integer id);
 }

@@ -35,6 +35,10 @@
     <div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
 	    <span th:text="${errorMessage}"></span>
 	</div>
+	
+	<div th:if="${successMessage}" style="color: green;">
+	    <p th:text="${successMessage}"></p>
+	</div>
 
     <button hx-get="/userApplicationRole/new"
             hx-target="#formContainer"
@@ -43,6 +47,25 @@
     </button>
 
     <div id="formContainer" style="margin-top: 20px;"></div>
+    
+    <h3>Unassign User from Role</h3>
+
+	<div>
+	    <label for="unassignUserSelect">Select User:</label>
+	    <select id="unassignUserSelect"
+	            name="userId"
+	            onchange="htmx.ajax('GET', '/userApplicationRole/unassign/' + this.value, {target:'#unassignContainer', swap:'innerHTML'})">
+	        <option value="" disabled selected>Select a user</option>
+	        <option th:each="user : ${users}"
+	                th:value="${user.id}"
+	                th:text="${user.firstName} + ' ' + ${user.lastName}">
+	        </option>
+	    </select>
+	</div>
+	
+	<br>
+	
+	<div id="unassignContainer"></div>
 
 </div>
 </body>

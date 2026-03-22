@@ -51,6 +51,13 @@ public class UserApplicationRoleController {
 	    return "userapplicationrole/form :: form";
 	}
 	
+	@GetMapping("/unassign/{userId}")
+	public String loadUnassignForm(@PathVariable Integer userId, Model model) {
+	    model.addAttribute("activeAssignments", service.findActiveAssignmentsByUserId(userId));
+	    model.addAttribute("selectedUserId", userId);
+	    return "userapplicationrole/unassign-form :: unassignForm";
+	}
+	
 	@PostMapping
 	public String create(@ModelAttribute("assignment") UserApplicationRoleCreateDto dto,
 	                     BindingResult bindingResult,
@@ -93,6 +100,30 @@ public class UserApplicationRoleController {
 	    }
 
 	    return "redirect:/userApplicationRole";
+	}
+	
+	@PostMapping("/unassign")
+	public String unassignRole(@RequestParam("userApplicationRoleId") Integer userApplicationRoleId,
+	                           @RequestParam("selectedUserId") Integer selectedUserId,
+	                           Model model) {
+	    try {
+	        service.unassign(userApplicationRoleId);
+	        model.addAttribute("successMessage", "Role unassigned successfully");
+	    } catch (IllegalStateException | jakarta.persistence.EntityNotFoundException e) {
+	        model.addAttribute("errorMessage", e.getMessage());
+	    }
+
+	    model.addAttribute("assignment", new UserApplicationRoleCreateDto(null, null, null, null, null, null));
+	    model.addAttribute("users", userService.findAll());
+	    model.addAttribute("applications", dataCacheService.findApplications());
+	    model.addAttribute("roles", dataCacheService.findApplicationRoles());
+	    model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+	    model.addAttribute("assignments", service.findAll());
+
+	    model.addAttribute("activeAssignments", service.findActiveAssignmentsByUserId(selectedUserId));
+	    model.addAttribute("selectedUserId", selectedUserId);
+
+	    return "userapplicationrole/list";
 	}
 
 }

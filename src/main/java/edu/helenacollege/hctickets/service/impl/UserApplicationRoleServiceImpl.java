@@ -120,6 +120,46 @@ public class UserApplicationRoleServiceImpl implements UserApplicationRoleServic
                 .map(mapper::toResponseDto)
                 .toList();
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserApplicationRoleResponseDto> findActiveAssignmentsByUserId(Integer userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        if (!"Active".equalsIgnoreCase(user.getStatus())) {
+            throw new IllegalStateException("User is not active");
+        }
+
+        return repository.findByUserIdAndStatus(userId, "Active").stream()
+                .map(mapper::toResponseDto)
+                .toList();
+    }
+
+    @Override
+    public UserApplicationRoleResponseDto unassign(Integer userApplicationRoleId) {
+
+        UserApplicationRole entity = repository.findById(userApplicationRoleId)
+                .orElseThrow(() -> new EntityNotFoundException("UserApplicationRole not found"));
+
+        if (!"Active".equalsIgnoreCase(entity.getStatus())) {
+            throw new IllegalStateException("Selected role assignment is already inactive");
+        }
+
+        if (!"Active".equalsIgnoreCase(entity.getUser().getStatus())) {
+            throw new IllegalStateException("User is not active");
+        }
+
+        if (!"Active".equalsIgnoreCase(entity.getApplication().getStatus())) {
+            throw new IllegalStateException("Application is not active");
+        }
+
+        entity.setStatus("Inactive");
+        entity.setInactiveDate(OffsetDateTime.now());
+
+        return mapper.toResponseDto(repository.save(entity));
+    }
 
     @Override
     public void delete(Integer id) {

@@ -1,0 +1,28 @@
+<div th:fragment="unassignForm">
+
+    <h3>Unassign Role</h3>
+
+    <form th:action="@{/userApplicationRole/unassign}" method="post">
+
+        <!-- Hidden field to keep track of selected user -->
+        <input type="hidden" name="selectedUserId" th:value="${selectedUserId}" />
+
+        <div>
+            <label>Select Active Role:</label>
+            <select name="userApplicationRoleId" required>
+                <option value="" disabled selected>Select a role</option>
+
+                <option th:each="assignment : ${activeAssignments}"
+                        th:value="${assignment.id}"
+                        th:text="${assignment.appName} + ' - ' + ${assignment.appRoleName}">
+                </option>
+            </select>
+        </div>
+
+        <br>
+
+        <button type="submit">Unassign Role</button>
+
+    </form>
+
+</div>
