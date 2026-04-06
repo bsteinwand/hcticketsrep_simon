@@ -7,9 +7,13 @@ import edu.helenacollege.hctickets.model.UserApplicationRole;
 
 @Mapper(componentModel = "spring")
 public interface UserApplicationRoleMapper {
-	
-	@Mapping(target = "userId", source = "user.id")
+    
+    // Maps UserApplicationRole entity to response DTO for UI display
+    @Mapping(target = "userId", source = "user.id")
+    
+    // Combines first and last name into a single display field
     @Mapping(target = "userName", expression = "java(entity.getUser().getFirstName() + \" \" + entity.getUser().getLastName())")
+    
     @Mapping(target = "appId", source = "application.id")
     @Mapping(target = "appName", source = "application.appName")
     @Mapping(target = "appRoleId", source = "applicationRole.id")
@@ -19,4 +23,3 @@ public interface UserApplicationRoleMapper {
 
     UserApplicationRoleResponseDto toResponseDto(UserApplicationRole entity);
 }
-

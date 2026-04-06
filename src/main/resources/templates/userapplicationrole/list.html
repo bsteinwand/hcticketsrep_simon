@@ -40,7 +40,7 @@
 	    <p th:text="${successMessage}"></p>
 	</div>
 
-    <button hx-get="/userApplicationRole/new"
+    <button hx-get="/applicationrole/new"
             hx-target="#formContainer"
             hx-swap="innerHTML">
         Assign New Role to User
@@ -54,7 +54,7 @@
 	    <label for="unassignUserSelect">Select User:</label>
 	    <select id="unassignUserSelect"
 	            name="userId"
-	            onchange="htmx.ajax('GET', '/userApplicationRole/unassign/' + this.value, {target:'#unassignContainer', swap:'innerHTML'})">
+	            onchange="htmx.ajax('GET', '/applicationrole/unassign/' + this.value, {target:'#unassignContainer', swap:'innerHTML'})">
 	        <option value="" disabled selected>Select a user</option>
 	        <option th:each="user : ${users}"
 	                th:value="${user.id}"

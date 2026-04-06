@@ -1,7 +1,6 @@
 package edu.helenacollege.hctickets.dto;
 
-import java.time.OffsetDateTime;
-
+// Used for updating an existing assignment
 public record UserApplicationRoleUpdateDto(
         String status,
         String activeDate,

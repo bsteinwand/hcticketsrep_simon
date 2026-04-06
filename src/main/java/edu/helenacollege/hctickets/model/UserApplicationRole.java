@@ -13,141 +13,141 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.EqualsAndHashCode;
-//import lombok.NoArgsConstructor;
-//import lombok.ToString;
-
-
 @Entity
 @Table(name = "UserApplicationRole", schema = "hctickets")
-//@ToString
-//@NoArgsConstructor
-//@EqualsAndHashCode
-//@Data
+// Represents a user's role assignment within a specific application
 public class UserApplicationRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Role assigned to the user within the application
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AppRoleId", nullable = false)
     private ApplicationRole applicationRole;
 
+    // User receiving the role assignment
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserId", nullable = false)
     private User user;
 
+    // Application the role is associated with
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AppId", nullable = false)
     private Application application;
 
+    // Current status of the assignment (Active / Inactive)
     @Column(name = "Status", nullable = false, length = 20)
     private String status;
     
+    // Date/time when the assignment became active
     @Column(name = "ActiveDate", nullable = false)
     private OffsetDateTime activeDate;
 
+    // Date/time when the assignment was inactivated (if applicable)
     @Column(name = "InactiveDate")
     private OffsetDateTime inactiveDate;
     
-	public UserApplicationRole() {
-		super();
-	}
+    public UserApplicationRole() {
+        super();
+    }
 
-	public UserApplicationRole(Integer id, ApplicationRole applicationRole, User user, Application application,
-			String status, OffsetDateTime activeDate, OffsetDateTime inactiveDate) {
-		super();
-		this.id = id;
-		this.applicationRole = applicationRole;
-		this.user = user;
-		this.application = application;
-		this.status = status;
-		this.activeDate = activeDate;
-		this.inactiveDate = inactiveDate;
-	}
+    public UserApplicationRole(Integer id, ApplicationRole applicationRole, User user, Application application,
+            String status, OffsetDateTime activeDate, OffsetDateTime inactiveDate) {
+        super();
+        this.id = id;
+        this.applicationRole = applicationRole;
+        this.user = user;
+        this.application = application;
+        this.status = status;
+        this.activeDate = activeDate;
+        this.inactiveDate = inactiveDate;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public ApplicationRole getApplicationRole() {
-		return applicationRole;
-	}
+    public ApplicationRole getApplicationRole() {
+        return applicationRole;
+    }
 
-	public void setApplicationRole(ApplicationRole applicationRole) {
-		this.applicationRole = applicationRole;
-	}
+    public void setApplicationRole(ApplicationRole applicationRole) {
+        this.applicationRole = applicationRole;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Application getApplication() {
-		return application;
-	}
+    public Application getApplication() {
+        return application;
+    }
 
-	public void setApplication(Application application) {
-		this.application = application;
-	}
+    public void setApplication(Application application) {
+        this.application = application;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public OffsetDateTime getActiveDate() {
-		return activeDate;
-	}
-
-	public void setActiveDate(OffsetDateTime activeDate) {
-		this.activeDate = activeDate;
-	}
-
-	public OffsetDateTime getInactiveDate() {
-		return inactiveDate;
-	}
-
-	public void setInactiveDate(OffsetDateTime inactiveDate) {
-		this.inactiveDate = inactiveDate;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(application, applicationRole, id, activeDate, inactiveDate, status, user);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserApplicationRole other = (UserApplicationRole) obj;
-		return Objects.equals(application, other.application) && Objects.equals(applicationRole, other.applicationRole)
-				&& Objects.equals(id, other.id) && Objects.equals(activeDate, other.activeDate) && Objects.equals(inactiveDate, other.inactiveDate)
-				&& Objects.equals(status, other.status) && Objects.equals(user, other.user);
-	}
-
-	@Override
-	public String toString() {
-		return "UserApplicationRole [id=" + id + ", applicationRole=" + applicationRole + ", user=" + user
-				+ ", application=" + application + ", status=" + status + ", activeDate=" + activeDate + ", inactiveDate=" + inactiveDate + "]";
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
+    public OffsetDateTime getActiveDate() {
+        return activeDate;
+    }
+
+    public void setActiveDate(OffsetDateTime activeDate) {
+        this.activeDate = activeDate;
+    }
+
+    public OffsetDateTime getInactiveDate() {
+        return inactiveDate;
+    }
+
+    public void setInactiveDate(OffsetDateTime inactiveDate) {
+        this.inactiveDate = inactiveDate;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(application, applicationRole, id, activeDate, inactiveDate, status, user);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UserApplicationRole other = (UserApplicationRole) obj;
+        return Objects.equals(application, other.application)
+                && Objects.equals(applicationRole, other.applicationRole)
+                && Objects.equals(id, other.id)
+                && Objects.equals(activeDate, other.activeDate)
+                && Objects.equals(inactiveDate, other.inactiveDate)
+                && Objects.equals(status, other.status)
+                && Objects.equals(user, other.user);
+    }
+
+    @Override
+    public String toString() {
+        return "UserApplicationRole [id=" + id + ", applicationRole=" + applicationRole + ", user=" + user
+                + ", application=" + application + ", status=" + status + ", activeDate=" + activeDate
+                + ", inactiveDate=" + inactiveDate + "]";
+    }
 }

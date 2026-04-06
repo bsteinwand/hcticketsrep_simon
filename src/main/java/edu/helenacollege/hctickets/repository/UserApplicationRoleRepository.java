@@ -5,5 +5,7 @@ import java.util.List;
 import edu.helenacollege.hctickets.model.UserApplicationRole;
 
 public interface UserApplicationRoleRepository extends JpaRepository<UserApplicationRole, Integer> {
-	List<UserApplicationRole> findByUserIdAndStatus(Integer userId, String status);
+
+    // Returns assignments for a user filtered by status (used for active role selection)
+    List<UserApplicationRole> findByUserIdAndStatus(Integer userId, String status);
 }

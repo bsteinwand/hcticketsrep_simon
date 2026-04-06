@@ -2,8 +2,9 @@ package edu.helenacollege.hctickets.dto;
 
 import java.time.OffsetDateTime;
 
+// Returned to UI for displaying user role assignments
 public record UserApplicationRoleResponseDto(
-		Integer id,
+        Integer id,
         Integer userId,
         String userName,
         Integer appId,
@@ -14,4 +15,3 @@ public record UserApplicationRoleResponseDto(
         OffsetDateTime activeDate,
         OffsetDateTime inactiveDate
 ) {}
-

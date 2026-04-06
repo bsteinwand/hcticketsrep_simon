@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>User Role View</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <h2>User Role Assignments</h2>
+
+    <ul>
+        <li th:each="assignment : ${activeAssignments}">
+            <span th:text="${assignment.appName} + ' - ' + ${assignment.appRoleName}"></span>
+
+            <a th:href="@{/applicationrole/unassign/{userId}(userId=${selectedUserId})}">
+                Unassign
+            </a>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>
