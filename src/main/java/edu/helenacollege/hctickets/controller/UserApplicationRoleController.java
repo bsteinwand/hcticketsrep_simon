@@ -33,7 +33,7 @@ public class UserApplicationRoleController {
 		model.addAttribute("users", userService.findAll());
 		model.addAttribute("applications", dataCacheService.findApplications());
 		model.addAttribute("roles", dataCacheService.findApplicationRoles());
-		model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+		model.addAttribute("statuses", dataCacheService.findStatusesByStatusType("UserApplicationRole"));
 		model.addAttribute("assignments", service.findAll());
 		
 		return "userapplicationrole/list";
@@ -45,8 +45,7 @@ public class UserApplicationRoleController {
 	    model.addAttribute("assignment", new UserApplicationRoleCreateDto(null, null, null, null, null, null));
 	    model.addAttribute("users", userService.findAll());
 	    model.addAttribute("applications", dataCacheService.findApplications());
-	    model.addAttribute("roles", dataCacheService.findApplicationRoles());
-	    model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+	    model.addAttribute("statuses", dataCacheService.findStatusesByStatusType("UserApplicationRole"));
 
 	    return "userapplicationrole/form :: form";
 	}
@@ -79,7 +78,7 @@ public class UserApplicationRoleController {
 	        model.addAttribute("users", userService.findAll());
 	        model.addAttribute("applications", dataCacheService.findApplications());
 	        model.addAttribute("roles", dataCacheService.findApplicationRoles());
-	        model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+	        model.addAttribute("statuses", dataCacheService.findStatusesByStatusType("UserApplicationRole"));
 	        model.addAttribute("assignments", service.findAll());
 
 	        // Return only table rows if request came from HTMX
@@ -98,7 +97,7 @@ public class UserApplicationRoleController {
 	        model.addAttribute("users", userService.findAll());
 	        model.addAttribute("applications", dataCacheService.findApplications());
 	        model.addAttribute("roles", dataCacheService.findApplicationRoles());
-	        model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+	        model.addAttribute("statuses", dataCacheService.findStatusesByStatusType("UserApplicationRole"));
 	        model.addAttribute("assignments", service.findAll());
 
 	        return "userapplicationrole/list";
@@ -130,7 +129,7 @@ public class UserApplicationRoleController {
 	    model.addAttribute("users", userService.findAll());
 	    model.addAttribute("applications", dataCacheService.findApplications());
 	    model.addAttribute("roles", dataCacheService.findApplicationRoles());
-	    model.addAttribute("statuses", dataCacheService.findActiveStatuses());
+	    model.addAttribute("statuses", dataCacheService.findStatusesByStatusType("UserApplicationRole"));
 	    model.addAttribute("assignments", service.findAll());
 
 	    // Re-populate unassign section after post so UI remains consistent

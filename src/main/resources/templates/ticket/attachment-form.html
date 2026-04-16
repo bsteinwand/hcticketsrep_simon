@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Add Ticket Attachment</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <h2>Add Attachment</h2>
+
+    <div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div th:if="${successMessage}" style="color: green; margin-bottom: 15px;">
+        <span th:text="${successMessage}"></span>
+    </div>
+
+    <form th:action="@{/ticket/{ticketId}/attachment/add(ticketId=${ticketId})}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <div>
+            <label for="userId">User:</label>
+            <select id="userId" name="userId" required>
+                <option value="" disabled selected>Select a user</option>
+                <option th:each="user : ${users}"
+                        th:value="${user.id}"
+                        th:text="${user.firstName} + ' ' + ${user.lastName}">
+                </option>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="title">Title:</label>
+            <input id="title" type="text" name="title" maxlength="40" required />
+        </div>
+
+        <br>
+
+        <div>
+            <label for="file">File:</label>
+            <input id="file" type="file" name="file" required />
+        </div>
+
+        <br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+</div>
+</body>
+</html>
